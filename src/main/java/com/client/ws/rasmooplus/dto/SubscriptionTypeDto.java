@@ -17,16 +17,16 @@ import java.math.BigDecimal;
 public class SubscriptionTypeDto {
     private Long id;
 
-    @NotBlank(message = "field name cannot be is null")
+    @NotBlank(message = "cannot be is null")
     private String name;
 
-    @Max(value = 12, message = "field accessMonths max valeu be is 12")
+    @Max(value = 12, message = "max value be is 12")
     private Long accessMonths;
 
-    @NotBlank(message = "field price cannot be is null")
+    @NotBlank(message = "cannot be is null")
     private BigDecimal price;
 
-    @NotBlank(message = "field productKey cannot be is null")
-    @Size(min = 5, max = 15, message = "field is be min 5 max 15")
+    @NotBlank(message = "cannot be is null")
+    @Size(min = 5, max = 15, message = "min 5 max 15")
     private String productKey;
 }
