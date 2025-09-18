@@ -1,5 +1,6 @@
 package com.client.ws.rasmooplus.service.subscription_type;
 
+import com.client.ws.rasmooplus.dto.SubscriptionTypeDto;
 import com.client.ws.rasmooplus.exception.NotFoundException;
 import com.client.ws.rasmooplus.model.SubscriptionsType;
 import com.client.ws.rasmooplus.repository.SubscriptionsTypeRepository;
@@ -32,14 +33,22 @@ public class SubscriptionTypeServiceImpl implements SubscriptionTypeService {
     }
 
     @Override
-    public SubscriptionsType create(SubscriptionsType subscriptionsType) {
-        return subscriptionsTypeRepository.save(subscriptionsType);
+    public SubscriptionsType create(SubscriptionTypeDto dto) {
+        return subscriptionsTypeRepository.save(SubscriptionsType
+                .builder()
+                .id(dto.getId())
+                .name(dto.getName())
+                .price(dto.getPrice())
+                .accessMonths(dto.getAccessMonths())
+                .productKey(dto.getProductKey())
+                .build());
     }
 
     @Override
     public SubscriptionsType update(Long id, SubscriptionsType subscriptionsType) {
-        return subscriptionsTypeRepository.save(subscriptionsType);
+        return null;
     }
+
 
     @Override
     public void delete(Long id) {
