@@ -1,4 +1,4 @@
-package com.client.ws.rasmooplus.service;
+package com.client.ws.rasmooplus.service.subscription_type;
 
 import com.client.ws.rasmooplus.model.SubscriptionsType;
 
