@@ -4,6 +4,7 @@ import com.client.ws.rasmooplus.dto.SubscriptionTypeDto;
 import com.client.ws.rasmooplus.exception.NotFoundException;
 import com.client.ws.rasmooplus.model.SubscriptionsType;
 import com.client.ws.rasmooplus.service.subscription_type.SubscriptionTypeService;
+import jakarta.validation.Valid;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,7 @@ public class SubscriptionTypeController {
     }
 
     @PostMapping()
-    public ResponseEntity<SubscriptionsType> create(@RequestBody SubscriptionTypeDto dto) {
+    public ResponseEntity<SubscriptionsType> create(@Valid @RequestBody SubscriptionTypeDto dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(subscriptionTypeService.create(dto));
     }
 
