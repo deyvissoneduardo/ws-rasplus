@@ -3,6 +3,7 @@ package com.client.ws.rasmooplus.exception.handler;
 import com.client.ws.rasmooplus.dto.error.ErrorResponseDto;
 import com.client.ws.rasmooplus.exception.BadRequestException;
 import com.client.ws.rasmooplus.exception.NotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -36,16 +37,24 @@ public class ResourceHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponseDto> methodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public ResponseEntity<ErrorResponseDto> badRequestException(MethodArgumentNotValidException m) {
         Map<String, String> messages = new HashMap<>();
-        e.getBindingResult().getFieldErrors().forEach((error) -> {
+        m.getBindingResult().getAllErrors().forEach(error -> {
             String field = ((FieldError) error).getField();
-            String message = error.getDefaultMessage();
-            messages.put(field, message);
+            String defaultMessage = error.getDefaultMessage();
+            messages.put(field, defaultMessage);
         });
-
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponseDto.builder()
                 .message(Arrays.toString(messages.entrySet().toArray()))
+                .httpStatus(HttpStatus.BAD_REQUEST)
+                .statusCode(HttpStatus.BAD_REQUEST.value())
+                .build());
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponseDto> badRequestException(DataIntegrityViolationException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorResponseDto.builder()
+                .message(e.getMessage())
                 .httpStatus(HttpStatus.BAD_REQUEST)
                 .statusCode(HttpStatus.BAD_REQUEST.value())
                 .build());
