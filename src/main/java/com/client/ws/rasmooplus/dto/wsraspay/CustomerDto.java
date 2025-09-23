@@ -1,5 +1,6 @@
 package com.client.ws.rasmooplus.dto.wsraspay;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CustumerDto {
+public class CustomerDto {
 
     private String id;
 
@@ -15,8 +16,7 @@ public class CustumerDto {
 
     private String email;
 
-    private String firstname;
+    private String firstName;
 
-    private String lastname;
-
+    private String lastName;
 }
