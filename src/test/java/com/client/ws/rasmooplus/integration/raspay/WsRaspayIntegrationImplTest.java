@@ -31,7 +31,7 @@ class WsRaspayIntegrationImplTest {
     @Test
     void processPayment() {
         CreditCardDto creditCardDto = new CreditCardDto(123L, "05283390101", 06L, "1234123412341234", 0L, 2025L);
-        PaymentDto dto = new PaymentDto(creditCardDto, "68d16435e0c14a364821df1a", "68d1ee766a6ad674dbfaa791");
+        PaymentDto dto = new PaymentDto(creditCardDto, "68d16435e0c14a364821df1a", "68d1f6426a6ad674dbfaa793");
         wsRaspayIntegration.processPayment(dto);
     }
 }
