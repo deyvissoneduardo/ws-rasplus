@@ -4,9 +4,9 @@ import com.client.ws.rasmooplus.dto.PaymentProcessDto;
 import com.client.ws.rasmooplus.dto.wsraspay.CustomerDto;
 import com.client.ws.rasmooplus.dto.wsraspay.OrderDto;
 import com.client.ws.rasmooplus.dto.wsraspay.PaymentDto;
-import com.client.ws.rasmooplus.exception.BadRequestException;
 import com.client.ws.rasmooplus.exception.BusinessException;
 import com.client.ws.rasmooplus.exception.NotFoundException;
+import com.client.ws.rasmooplus.integration.mail.MailIntegration;
 import com.client.ws.rasmooplus.integration.raspay.WsRaspayIntegration;
 import com.client.ws.rasmooplus.mapper.UserPaymentInfoMapper;
 import com.client.ws.rasmooplus.mapper.wsrapay.CreditCardMapper;
@@ -25,11 +25,13 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
     private final UserRepository userRepository;
     private final UserPaymentInfoRepository userPaymentInfoRepository;
     private final WsRaspayIntegration wsRaspayIntegration;
+    private final MailIntegration mailIntegration;
 
-    public PaymentInfoServiceImpl(UserRepository userRepository, UserPaymentInfoRepository userPaymentInfoRepository, WsRaspayIntegration wsRaspayIntegration) {
+    public PaymentInfoServiceImpl(UserRepository userRepository, UserPaymentInfoRepository userPaymentInfoRepository, WsRaspayIntegration wsRaspayIntegration, MailIntegration mailIntegration) {
         this.userRepository = userRepository;
         this.userPaymentInfoRepository = userPaymentInfoRepository;
         this.wsRaspayIntegration = wsRaspayIntegration;
+        this.mailIntegration = mailIntegration;
     }
 
     @Override
@@ -54,6 +56,7 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
        if(wsRaspayIntegration.processPayment(paymentDto)) {
            UserPaymentInfo userPaymentInfo = UserPaymentInfoMapper.fromDtoToEntity(dto.getUserPaymentInfoDto(), user);
            userPaymentInfoRepository.save(userPaymentInfo);
+           mailIntegration.send(user.getEmail(), "Mensagem de teste", "Acesso liberado");
        }
 
         return null;
