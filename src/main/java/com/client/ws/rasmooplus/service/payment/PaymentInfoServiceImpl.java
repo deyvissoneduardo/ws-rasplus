@@ -17,9 +17,11 @@ import com.client.ws.rasmooplus.model.User;
 import com.client.ws.rasmooplus.model.UserPaymentInfo;
 import com.client.ws.rasmooplus.repository.UserPaymentInfoRepository;
 import com.client.ws.rasmooplus.repository.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
+@Service
 public class PaymentInfoServiceImpl implements PaymentInfoService {
 
     private final UserRepository userRepository;
@@ -57,8 +59,9 @@ public class PaymentInfoServiceImpl implements PaymentInfoService {
            UserPaymentInfo userPaymentInfo = UserPaymentInfoMapper.fromDtoToEntity(dto.getUserPaymentInfoDto(), user);
            userPaymentInfoRepository.save(userPaymentInfo);
            mailIntegration.send(user.getEmail(), "Mensagem de teste", "Acesso liberado");
+           return true;
        }
 
-        return null;
+        return false;
     }
 }

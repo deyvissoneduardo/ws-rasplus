@@ -35,6 +35,9 @@ public class UserPaymentInfo implements Serializable {
     @Column(name = "card_security_code")
     private String cardSecurityCode;
 
+    @Column(name = "installments")
+    private Long installments;
+
     private BigDecimal price;
 
     private Long instalments;
